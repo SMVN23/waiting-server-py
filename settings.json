@@ -1,0 +1,9 @@
+{
+    "DATABASE": {
+        "HOST": "b14.h.filess.io",
+        "PORT": 3305,
+        "USERNAME": "waiting_smileglobe",
+        "PASSWORD": "waiting",
+        "NAME": "waiting_smileglobe"
+    }
+}
