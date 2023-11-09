@@ -2,11 +2,10 @@
 
 from __future__ import absolute_import
 
-DB_NAME = "waiting"
+WATING_DATABASE_NAME = "waiting"
+REGISTRATIONS_TABLE_NAME = "tb_registrations"
 
-TB_REGISTRATIONS_NAME = "tb_registrations"
-
-class RegistrationStatus:
+class RegStatus:
     UNDEFINED = -1
     REGISTERED = 0
     ENTERED = 1
@@ -14,7 +13,7 @@ class RegistrationStatus:
     NOT_ENTERED = 3
 
 
-class TbRegistrationsColumns:
+class RegsTableHeader:
     REGISTRATION_ID = "REGISTRATION_ID"
     STORE_ID = "STORE_ID"
     WAITING_ORDER = "WAITING_ORDER"
@@ -22,16 +21,6 @@ class TbRegistrationsColumns:
     TEAM_SIZE = "TEAM_SIZE"
     TIMESTAMP = "TIMESTAMP"
     STATUS = "STATUS"
-
-TB_REGISTRATIONS_ALL_COLUMNS = [
-    TbRegistrationsColumns.REGISTRATION_ID,
-    TbRegistrationsColumns.STORE_ID,
-    TbRegistrationsColumns.WAITING_ORDER,
-    TbRegistrationsColumns.PHONE_NUMBER,
-    TbRegistrationsColumns.TEAM_SIZE,
-    TbRegistrationsColumns.TIMESTAMP,
-    TbRegistrationsColumns.STATUS
-]
 
 TOTAL_REGISTRATIONS = "TOTAL_REGISTRATIONS"
 TOTAL_WAITING_MINUTES = "TOTAL_WAITING_MINUTES"

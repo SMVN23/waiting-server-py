@@ -2,22 +2,10 @@
 
 from __future__ import absolute_import
 
-# Type hint imports
-from typing import Dict, Union
-
-# Required imports
 from shared_constants import TB_REGISTRATIONS_NAME, TbRegistrationsColumns, \
     TB_REGISTRATIONS_ALL_COLUMNS, RegistrationStatus
 
-class RegistrationDefinition:
-    def __init__(self):
-        self.registration_id = -1
-        self.store_id = -1
-        self.waiting_order = -1
-        self.phone_number = ""
-        self.team_size = -1
-        self.timestamp = "yyyy-mm-dd HH:MM:SS"
-        self.status = RegistrationStatus.UNDEFINED
+class RegDbBridge:
 
     def get_column_value(self, column_name: str) -> Union[str, int]:
         if column_name == TbRegistrationsColumns.REGISTRATION_ID:
@@ -69,4 +57,22 @@ class RegistrationDefinition:
 
         column_names_str = ", ".join(TB_REGISTRATIONS_ALL_COLUMNS)
         return f"INSERT INTO {TB_REGISTRATIONS_NAME} ({column_names_str}) VALUES ('{column_values_str}')"
+
+    def create_from_response(self, response_body):
+        registration = RegDefinition()
+        for column_name, column_value in response_body.items():
+            registration.set_column_value(column_name, column_value)
+        return registration
+
+    @classmethod
+    def create_from_select_query(self, row):
+        registration = RegDefinition()
+        registration.registration_id = row[0]
+        registration.store_id = row[1]
+        registration.waiting_order = row[2]
+        registration.phone_number = row[3]
+        registration.team_size = row[4]
+        registration.timestamp = row[6]
+        registration.status = row[6]
+        return registration
 
