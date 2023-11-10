@@ -13,7 +13,7 @@ class WaitingRegistration:
         self.__waiting_order = -1
         self.__phone_number = ""
         self.__team_size = -1
-        self.__timestamp = datetime.datetime.now().strftime(TIMESTAMP_FORMAT)
+        self.__timestamp = datetime.datetime.now().isoformat(timespec="milliseconds")
         self.__status = RegStatus.REGISTERED
 
     def get_id(self):
