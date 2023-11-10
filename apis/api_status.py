@@ -2,17 +2,20 @@
 
 from __future__ import absolute_import
 
-# Type hint imports
-
-# Required imports
 from flask import Blueprint, g, request, jsonify
+
 from shared_constants import TOTAL_REGISTRATIONS, TOTAL_WAITING_MINUTES, WAITING_MINUTES_PER_TEAM
+import services_provider
+from waiting import WaitingManager
 
-bp = Blueprint("status", __name__, url_prefix="/")
+blueprint = Blueprint("status", __name__, url_prefix="/")
 
-@bp.route("/status", methods=["PUT"])
+@blueprint.route("/status", methods=["PUT"])
 def change_registration_status():
-    total_registrations, waiting_minutes_per_team = g.registrations_mgr.change_registration_status(request.get_json())
+    wait_mgr = services_provider.get_service(g, WaitingManager)
+    assert wait_mgr is not None
+
+    total_registrations, waiting_minutes_per_team = wait_mgr.change_registration_status(request.get_json())
     return jsonify({
         TOTAL_REGISTRATIONS: total_registrations,
         TOTAL_WAITING_MINUTES: total_registrations*waiting_minutes_per_team,
