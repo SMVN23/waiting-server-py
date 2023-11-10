@@ -2,8 +2,16 @@
 
 from __future__ import absolute_import
 
-WATING_DATABASE_NAME = "waiting"
+IS_LOCAL_HOST = False
+if IS_LOCAL_HOST:
+    SETTING_JSON_NAME = "settings_localhost.json"
+    WATING_DATABASE_NAME = "waiting"
+else:
+    SETTING_JSON_NAME = "settings_server.json"
+    WATING_DATABASE_NAME = "waiting_smileglobe"
+
 REGISTRATIONS_TABLE_NAME = "tb_registrations"
+
 
 INITIAL_WAITING_ORDER = 1
 INITIAL_WAITING_TIME_PER_TEAM = 10
