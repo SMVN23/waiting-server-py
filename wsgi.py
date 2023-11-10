@@ -86,7 +86,7 @@ def test_api_status(reg_id, store_id, reg_status):
     }, indent=4))
 
 if __name__ == "__main__":
-    application.run()
+    application.run("0.0.0.0")
     # test_api_add("010-1234-5678", 2)
     # test_api_add("010-8765-4321", 4)
     # test_api_dashboard(1)
