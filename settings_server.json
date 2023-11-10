@@ -1,13 +1,13 @@
 {
     "DATABASE_SERVER": {
-        "HOST": "b14.h.filess.io",
+        "HOST": "qyr.h.filess.io",
         "PORT": 3305,
-        "USERNAME": "waiting_smileglobe",
+        "USERNAME": "waiting_slightsold",
         "PASSWORD": "waiting"
     },
     "DATABASES": [
         {
-            "NAME": "waiting_smileglobe",
+            "NAME": "waiting_slightsold",
             "TABLES": [
                 {
                     "NAME": "tb_registrations",

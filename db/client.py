@@ -30,16 +30,16 @@ class DbClient:
             self.__connection.close()
 
     def exec_query(self, query):
+        rows = []
         try:
             self.__cursor.execute(query)
             print(f"Success to execute query: {query}")
 
-            rows = []
             for row in self.__cursor:
                 rows.append(row)
-            return rows
         except pymysql.Error as e:
             print(f"Error execute query: {query}\n    {e}")
+        return rows
 
     def exec_query_and_commit(self, query):
         rows = self.exec_query(query)
