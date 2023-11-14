@@ -2,7 +2,7 @@
 
 from __future__ import absolute_import
 
-from shared_constants import RegsTableHeader
+from shared_constants import RegsTableHeader, StoreSettingsTableHeader
 
 class WaitingManager:
     def __init__(self, wait_db_adapter, wait_factory):
@@ -12,7 +12,7 @@ class WaitingManager:
 
     def __create_store(self, store_id):
         store = self.__wait_factory.create_store(store_id, self.__wait_db_adapter)
-        store.init_registrations()
+        store.init()
         self.__stores[store_id] = store
         return store
 
@@ -68,3 +68,7 @@ class WaitingManager:
         store_id = json_object[RegsTableHeader.STORE_ID]
         reg_status = json_object[RegsTableHeader.STATUS]
         return self.__get_store(store_id).change_registration_status(reg_id, reg_status)
+
+    def change_waiting_minutes_per_team(self, store_id, json_object):
+        waiting_minutes_per_team = json_object[StoreSettingsTableHeader.WAITING_MINUTES_PER_TEAM]
+        return self.__get_store(store_id).change_waiting_minutes_per_team(waiting_minutes_per_team)

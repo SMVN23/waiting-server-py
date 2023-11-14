@@ -21,6 +21,14 @@
                         "STATUS": "INTEGER"
                     },
                     "PRIMARY_KEY": "REGISTRATION_ID"
+                },
+                {
+                    "NAME": "tb_store_settings",
+                    "HEADERS": {
+                        "STORE_ID": "INTEGER",
+                        "WAITING_MINUTES_PER_TEAM": "INTEGER"
+                    },
+                    "PRIMARY_KEY": "STORE_ID"
                 }
             ]
         }
