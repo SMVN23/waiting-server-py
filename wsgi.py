@@ -5,7 +5,7 @@ from __future__ import absolute_import
 import json
 
 from shared_constants import TOTAL_REGISTRATIONS, TOTAL_WAITING_MINUTES, WAITING_MINUTES_PER_TEAM, \
-    RegsTableHeader
+    RegsTableHeader, StoreSettingsTableHeader
 from server import app as application
 
 ####
@@ -85,6 +85,16 @@ def test_api_status(reg_id, store_id, reg_status):
         WAITING_MINUTES_PER_TEAM: waiting_minutes_per_team
     }, indent=4))
 
+# /change
+def test_api_change(store_id, waiting_minutes_per_team):
+    from server import wait_mgr
+
+    json_object = {
+        StoreSettingsTableHeader.WAITING_MINUTES_PER_TEAM: waiting_minutes_per_team
+    }
+
+    wait_mgr.change_waiting_minutes_per_team(store_id, json_object)
+
 if __name__ == "__main__":
     application.run("0.0.0.0")
     # test_api_add("010-1234-5678", 2)
@@ -93,3 +103,4 @@ if __name__ == "__main__":
     # test_api_registrations(1)
     # test_api_reset(1)
     # test_api_status(1, 1, 1)
+    # test_api_change(1, 5)

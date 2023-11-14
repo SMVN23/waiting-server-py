@@ -2,7 +2,8 @@
 
 from __future__ import absolute_import
 
-from shared_constants import WATING_DATABASE_NAME, REGISTRATIONS_TABLE_NAME, RegsTableHeader
+from shared_constants import WATING_DATABASE_NAME, REGISTRATIONS_TABLE_NAME, STORE_SETTINGS_TABLE_NAME, \
+    RegsTableHeader, StoreSettingsTableHeader
 
 class WaitingDbAdapter:
     def __init__(self, dbManager) -> None:
@@ -14,6 +15,9 @@ class WaitingDbAdapter:
 
         self.__registrations_tb = self.__waiting_db.get_table(REGISTRATIONS_TABLE_NAME)
         assert self.__registrations_tb is not None
+
+        self.__store_settings_tb = self.__waiting_db.get_table(STORE_SETTINGS_TABLE_NAME)
+        assert self.__store_settings_tb is not None
 
     def set_wait_factory(self, wait_factory):
         self.__wait_factory = wait_factory
@@ -29,9 +33,8 @@ class WaitingDbAdapter:
 
 
     def get_store_ids(self):
-        query = f"SELECT {RegsTableHeader.STORE_ID} FROM {REGISTRATIONS_TABLE_NAME} GROUP BY " \
-                f"{RegsTableHeader.STORE_ID}"
-        rows = self.__registrations_tb.exec_query(query)
+        header_names = [StoreSettingsTableHeader.STORE_ID]
+        rows = self.__store_settings_tb.get_rows(header_names)
         store_ids = []
         for row in rows:
             store_ids.append(row[0])
@@ -80,9 +83,23 @@ class WaitingDbAdapter:
         return last_waiting_order + 1
 
     def get_waiting_minutes_per_team(self, store_id):
-        return 10
+        header_names = [StoreSettingsTableHeader.WAITING_MINUTES_PER_TEAM]
+        conditions = {StoreSettingsTableHeader.STORE_ID: store_id}
+        rows = self.__store_settings_tb.get_rows(header_names, conditions)
+        if rows:
+            return rows[0][0]
+        else:
+            return -1
 
     def change_registration_status(self, reg_id, reg_status):
         header_values = {RegsTableHeader.STATUS: reg_status}
         conditions = {RegsTableHeader.REGISTRATION_ID: reg_id}
         self.__registrations_tb.update_columns(header_values, conditions)
+
+    def add_store(self, store_id, waiting_minutes_per_team):
+        self.__store_settings_tb.add_row([store_id, waiting_minutes_per_team])
+
+    def change_waiting_minutes_per_team(self, store_id, waiting_minutes_per_team):
+        header_values = {StoreSettingsTableHeader.WAITING_MINUTES_PER_TEAM: waiting_minutes_per_team}
+        conditions = {StoreSettingsTableHeader.STORE_ID: store_id}
+        self.__store_settings_tb.update_columns(header_values, conditions)

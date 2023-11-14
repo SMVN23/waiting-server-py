@@ -54,15 +54,18 @@ class DbTable:
             query = f"INSERT INTO {self.__name} ({header_names_str}) VALUES ('{header_values_str}')"
             self.__client.exec_query_and_commit(query)
 
-    def get_rows(self, header_names, conditions):
+    def get_rows(self, header_names, conditions=None):
         header_names_str = ",".join(header_names)
 
-        condition_strlist = []
-        for header_name, header_value in conditions.items():
-            condition_strlist.append(f"{header_name}='{header_value}'")
-        condition_str = " AND ".join(condition_strlist)
+        if conditions is None:
+            query = f"SELECT {header_names_str} FROM {self.__name}"
+        else:
+            condition_strlist = []
+            for header_name, header_value in conditions.items():
+                condition_strlist.append(f"{header_name}='{header_value}'")
+            condition_str = " AND ".join(condition_strlist)
 
-        query = f"SELECT {header_names_str} FROM {self.__name} WHERE {condition_str}"
+            query = f"SELECT {header_names_str} FROM {self.__name} WHERE {condition_str}"
         return self.__client.exec_query(query)
 
     def update_columns(self, header_values, conditions):

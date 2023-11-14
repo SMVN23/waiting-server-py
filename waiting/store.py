@@ -13,13 +13,16 @@ class WaitingStore:
         self.__waiting_minutes_per_team = INITIAL_WAITING_TIME_PER_TEAM
         self.__registrations = {}
 
-    def init_registrations(self):
+    def init(self):
         registrations = self.__db_adapter.get_registrations(self.__store_id, RegStatus.REGISTERED)
         for registration in registrations:
             self.__registrations[registration.get_id()] = registration
 
         self.__waiting_order = self.__db_adapter.get_last_waiting_order(self.__store_id)
         self.__waiting_minutes_per_team = self.__db_adapter.get_waiting_minutes_per_team(self.__store_id)
+        if self.__waiting_minutes_per_team < 0:
+            self.__waiting_minutes_per_team = INITIAL_WAITING_TIME_PER_TEAM
+            self.__db_adapter.add_store(self.__store_id, self.__waiting_minutes_per_team)
 
     def get_registrations(self):
         return self.__registrations
@@ -41,3 +44,7 @@ class WaitingStore:
         self.__db_adapter.change_registration_status(reg_id, reg_status)
         del self.__registrations[reg_id]
         return self.get_dashboard()
+
+    def change_waiting_minutes_per_team(self, waiting_minutes_per_team):
+        self.__waiting_minutes_per_team = waiting_minutes_per_team
+        self.__db_adapter.change_waiting_minutes_per_team(self.__store_id, self.__waiting_minutes_per_team)
