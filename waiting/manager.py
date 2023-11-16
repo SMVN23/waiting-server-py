@@ -45,8 +45,8 @@ class WaitingManager:
             RegsTableHeader.STATUS: registration.get_status()
         }
 
-    def get_registrations(self, store_id):
-        registrations = self.__get_store(store_id).get_registrations()
+    def get_registrations(self, store_id, is_completed):
+        registrations = self.__get_store(store_id).get_registrations(is_completed)
         json_object = []
         for registration in registrations.values():
             json_object.append({
