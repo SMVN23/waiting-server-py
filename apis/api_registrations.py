@@ -15,5 +15,6 @@ def get_registrations():
     assert wait_mgr is not None
 
     store_id = int(request.args.get("store_id"))
-    json_object = wait_mgr.get_registrations(store_id)
+    is_completed = int(request.args.get("is_completed"))
+    json_object = wait_mgr.get_registrations(store_id, is_completed)
     return jsonify(json_object)
