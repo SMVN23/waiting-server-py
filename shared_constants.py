@@ -8,7 +8,7 @@ if IS_LOCAL_HOST:
     WATING_DATABASE_NAME = "waiting"
 else:
     SETTING_JSON_NAME = "settings_server.json"
-    WATING_DATABASE_NAME = "waiting_slightsold"
+    WATING_DATABASE_NAME = "waiting_fencemail"
 
 REGISTRATIONS_TABLE_NAME = "tb_registrations"
 STORE_SETTINGS_TABLE_NAME = "tb_store_settings"

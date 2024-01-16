@@ -1,13 +1,13 @@
 {
     "DATABASE_SERVER": {
-        "HOST": "qyr.h.filess.io",
+        "HOST": "to6.h.filess.io",
         "PORT": 3305,
-        "USERNAME": "waiting_slightsold",
+        "USERNAME": "waiting_fencemail",
         "PASSWORD": "waiting"
     },
     "DATABASES": [
         {
-            "NAME": "waiting_slightsold",
+            "NAME": "waiting_fencemail",
             "TABLES": [
                 {
                     "NAME": "tb_registrations",
